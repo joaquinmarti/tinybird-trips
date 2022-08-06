@@ -30,7 +30,7 @@ const persistence = new UrlPersistence();
 let rawData: ResponseType["data"];
 
 // Helper function to prepare data for the chart
-const prepareData = (trips: ResponseType["data"], line: string): ChartData => {
+const prepareData = (trips: ResponseType["data"], line: StateType["aggregated"]): ChartData => {
   return {
     bars: {
       metric: "trips",
@@ -54,17 +54,17 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 
   if (target.name === "range") {
     persistence.set("range", target.value);
-    queryAndUpdate(target.value as "day_of_the_week" | "hourly", "average_distance");
+    queryAndUpdate(target.value as StateType["range"], "average_distance");
   }
 
   if (target.name === "aggregated") {
     persistence.set("aggregated", target.value);
-    updateWidget(prepareData(rawData, target.value));
+    updateWidget(prepareData(rawData, target.value as StateType["aggregated"]));
   }
 });
 
 // Query the data and send it to the widget
-const queryAndUpdate = async (range: "day_of_the_week" | "hourly", aggregated: string): Promise<void> => {
+const queryAndUpdate = async (range: StateType["range"], aggregated: StateType["aggregated"]): Promise<void> => {
   const result = await endpoint.query(queries[range]) as ResponseType;
 
   rawData = result.data;
