@@ -40,7 +40,7 @@ export default class Chart extends HTMLElement {
   buildRangeSelect(): HTMLDivElement {
     return createSelect("range", "Number of trips by time range", [
       {
-        value: "dayOfTheWeek",
+        value: "day_of_the_week",
         label: "Day of the week"
       },
       {
@@ -51,7 +51,7 @@ export default class Chart extends HTMLElement {
   }
 
   buildAggregatedSelect(): HTMLDivElement {
-    return createSelect("line", "Select aggregated data", [
+    return createSelect("aggregated", "Select aggregated data", [
       {
         value: "fare",
         label: "Total fare"
