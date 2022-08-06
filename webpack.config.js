@@ -3,9 +3,9 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: {
-    widgetsLoader: "./src/loader",
+    widget: "./src/widgets/chart",
     lib: "./src/lib",
-    chart: "./src/widgets/chart"
+    chart: "./src/components/chart"
   },
   output: {
     filename: "[name]-[contenthash].js",
@@ -28,7 +28,7 @@ module.exports = {
     extensions: [".js", ".ts"],
   },
   plugins: [new HtmlWebpackPlugin({
-    chunks: ["widgetsLoader", "chart"],
+    chunks: ["widget", "chart"],
     template: "./support/webpack.template.html",
     title: "Tinybird Widgets Test",
     inject: false

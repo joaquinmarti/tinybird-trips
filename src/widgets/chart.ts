@@ -1,10 +1,7 @@
-/*
-This loader contains code to config a specific widget. It could be a server
-generated JS file loading the config needed depending on the widget ID.
-*/
+/* This file contains the code to config a specific widget instance. */
 
 import { UrlPersistence, EndpointsManager } from "../lib";
-import type ChartData from "../widgets/chart/types/chart-data";
+import type ChartData from "../components/chart/types/chart-data";
 
 const token = "p.eyJ1IjogIjdmOTIwMmMzLWM1ZjctNDU4Ni1hZDUxLTdmYzUzNTRlMTk5YSIsICJpZCI6ICJmZTRkNWFiZS05ZWIyLTRjMjYtYWZiZi0yYTdlMWJlNDQzOWEifQ.P67MfoqTixyasaMGH5RIjCrGc0bUKvBoKMwYjfqQN8c";
 
@@ -102,8 +99,8 @@ widget.data = prepareData(trips, "trips", "average_distance");
 // Number of trips per day of the week
 // const result = endpoint.query(`SELECT count() as trips, toDayOfWeek(tpep_pickup_datetime) as day, SUM(total_amount) as fare, AVG(total_amount) as average_fare, AVG(trip_distance)  as average_distance FROM _ GROUP BY toDayOfWeek(tpep_pickup_datetime)`);
 
-// Number of trips per day of the week
-// const result = endpoint.query(`https://api.tinybird.co/v0/pipes/yellow_tripdata_2017_pipe.json?q= SELECT count() as trips, toDayOfMonth(tpep_pickup_datetime) as day, SUM(total_amount) as fare, AVG(total_amount) as average_fare, AVG(trip_distance)  as average_distance FROM _ GROUP BY toDayOfMonth(tpep_pickup_datetime)`);
+// Number of trips per day of the month
+// const result = endpoint.query(`SELECT count() as trips, toDayOfMonth(tpep_pickup_datetime) as day, SUM(total_amount) as fare, AVG(total_amount) as average_fare, AVG(trip_distance)  as average_distance FROM _ GROUP BY toDayOfMonth(tpep_pickup_datetime)`);
 
 // setTimeout(() => {
 //   console.log(result);

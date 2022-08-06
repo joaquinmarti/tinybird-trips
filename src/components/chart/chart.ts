@@ -46,7 +46,7 @@ export default class Chart extends HTMLElement {
   }
 
   buildBars(values: ChartData["bars"]["values"], maxBars: number): SVGRectElement[] {
-    return values.map((item: any, index: number) => {
+    return values.map((item: number, index: number) => {
       return this.buildBar(
         100 / values.length,
         100 * item / maxBars,
@@ -68,7 +68,7 @@ export default class Chart extends HTMLElement {
 
   buildLine(values: ChartData["line"]["values"], max: number): SVGPolylineElement {
     const polyline = createSVGElement("polyline") as SVGPolylineElement;
-    const points = values.map((item: any, index: number) => {
+    const points = values.map((item: number, index: number) => {
       const percentage = 100 / values.length;
       const x = (percentage * index) + (percentage / 2);
       const y = 100 - (50 * item / max);
