@@ -1,4 +1,4 @@
 export default interface PersistenceService {
   get: () => {} | null;
-  set: (data: {}) => void;
+  set: (name: string, value: string) => void;
 }
