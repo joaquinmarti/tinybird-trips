@@ -54,14 +54,24 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 
   if (target.name === "range") {
     persistence.set("range", target.value);
-    queryAndUpdate(target.value as StateType["range"], "average_distance");
   }
 
   if (target.name === "aggregated") {
     persistence.set("aggregated", target.value);
-    updateWidget(prepareData(rawData, target.value as StateType["aggregated"]));
   }
 });
+
+// Load chart
+const loadChart = (): void => {
+  const { range, aggregated } = persistence.get();
+  queryAndUpdate(
+    range || defaultState.range,
+    aggregated || defaultState.aggregated
+  );
+}
+
+// History listener. In our case, the url behaves as a store and the history as a bus event
+window.onpopstate = () => loadChart();
 
 // Query the data and send it to the widget
 const queryAndUpdate = async (range: StateType["range"], aggregated: StateType["aggregated"]): Promise<void> => {
@@ -72,8 +82,5 @@ const queryAndUpdate = async (range: StateType["range"], aggregated: StateType["
 };
 
 // Initial load
-const { range, aggregated } = persistence.get();
-queryAndUpdate(
-  range || defaultState.range,
-  aggregated || defaultState.aggregated
-);
+loadChart();
+
