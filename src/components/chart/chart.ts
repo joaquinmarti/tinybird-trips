@@ -3,6 +3,7 @@ import createSVGElement from "./helpers/create-svg-element";
 import createSelect from "./helpers/create-select";
 import styles from "./styles.css";
 import type ChartDataType from "./types/chart-data";
+import type StateType from "./types/state";
 
 export default class Chart extends HTMLElement {
   constructor() {
@@ -15,7 +16,7 @@ export default class Chart extends HTMLElement {
   }
 
   set data(data: ChartDataType) {
-    this.removeSvg();
+    this.shadowRoot.querySelector("svg")?.remove();
     this.shadowRoot.appendChild(this.buildSvg(data))
   }
 
@@ -39,7 +40,7 @@ export default class Chart extends HTMLElement {
   }
 
   buildRangeSelect(): HTMLDivElement {
-    return createSelect("range", "Number of trips by time range", [
+    const selectOptions: { value: StateType["range"], label: string }[] = [
       {
         value: "day_of_the_week",
         label: "Day of the week"
@@ -48,11 +49,13 @@ export default class Chart extends HTMLElement {
         value: "hourly",
         label: "Hourly"
       }
-    ]);
+    ];
+
+    return createSelect("range", "Number of trips by time range", selectOptions);
   }
 
   buildAggregatedSelect(): HTMLDivElement {
-    return createSelect("aggregated", "Select aggregated data", [
+    const selectOptions: { value: StateType["aggregated"], label: string }[] = [
       {
         value: "fare",
         label: "Total fare"
@@ -65,18 +68,12 @@ export default class Chart extends HTMLElement {
         value: "average_distance",
         label: "Average distance"
       }
-    ]);
+    ];
+
+    return createSelect("aggregated", "Select aggregated data", selectOptions);
   }
 
   /* SVG rendering functions */
-  removeSvg(): void {
-    const svg = this.shadowRoot.querySelector("svg");
-
-    if (svg) {
-      svg.remove();
-    }
-  }
-
   buildSvg({ bars, line }: ChartDataType): SVGSVGElement {
     const svg = createSVGElement("svg") as SVGSVGElement;
     const g = createSVGElement("g") as SVGGElement;

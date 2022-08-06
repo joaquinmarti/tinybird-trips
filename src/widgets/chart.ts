@@ -44,9 +44,7 @@ const prepareData = (trips: ResponseType["data"], line: StateType["aggregated"])
 };
 
 // Send the data to the chart
-const updateWidget = (data: ChartData): void => {
-  widget.data = data;
-}
+const updateWidget = (data: ChartData) => widget.data = data;
 
 // Events
 widget.shadowRoot.addEventListener("change",(event: Event) => {

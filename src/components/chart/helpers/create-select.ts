@@ -1,4 +1,4 @@
-import OptionType from "../types/option";
+import type OptionType from "../types/option";
 
 const createSelect = (name: string, text: string, options: OptionType[]): HTMLDivElement => {
   const div = document.createElement("div");
@@ -7,7 +7,7 @@ const createSelect = (name: string, text: string, options: OptionType[]): HTMLDi
 
   // Prepare select and the options
   select.setAttribute("name", name);
-  options.forEach(({value, label}) => {
+  options.forEach(({ value, label }: {value: string, label: string}) => {
     const option = document.createElement("option");
 
     option.setAttribute("value", value);
