@@ -1,5 +1,5 @@
 import PersistenceServive from "./common/persistence-service-interface";
-import type StateType from "../../components/chart/types/state";
+import type StateType from "../../widgets/chart/types/state";
 
 export default class UrlPersistence implements PersistenceServive {
   constructor() {}
@@ -17,7 +17,7 @@ export default class UrlPersistence implements PersistenceServive {
     const params = new URLSearchParams(window.location.search);
     params.set(name, value);
 
-    window.history.pushState({}, '', `${window.location.pathname}?${params}`);
+    window.history.pushState({}, "", `${window.location.pathname}?${params}`);
     window.dispatchEvent(new Event("popstate"));
   }
 }

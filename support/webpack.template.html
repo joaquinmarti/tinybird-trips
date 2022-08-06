@@ -12,8 +12,8 @@
     (function (w, d, s, ce) {
       var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce);
       w.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('chart') === 0)[0].attributes.src %>";
-      l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('widget') === 0)[0].attributes.src %>";
-      f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f); f.parentNode.insertBefore(wdi, f);
+      l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('init') === 0)[0].attributes.src %>";
+      l.async = true; f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f); f.parentNode.insertBefore(wdi, f);
     })(window, document, "script", "tbw-chart");
   </script>
   <!-- End TB Widget -->

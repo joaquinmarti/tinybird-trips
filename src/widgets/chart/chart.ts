@@ -9,7 +9,7 @@ export default class Chart extends HTMLElement {
   constructor() {
     super();
 
-    const shadow = this.attachShadow({ mode: 'open' });
+    const shadow = this.attachShadow({ mode: "open" });
 
     shadow.appendChild(this.buildStyle());
     shadow.appendChild(this.buildFilters());
