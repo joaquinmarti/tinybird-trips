@@ -16,7 +16,7 @@ export default class Chart extends HTMLElement {
     this.shadowRoot.appendChild(this.buildSvg(data))
   }
 
-  buildStyle() {
+  buildStyle(): HTMLStyleElement {
     const style = document.createElement("style");
 
     style.innerHTML = styles;
@@ -24,9 +24,9 @@ export default class Chart extends HTMLElement {
     return style;
   }
 
-  buildSvg({ bars, line }: ChartData) {
-    const svg = createSVGElement("svg");
-    const g = createSVGElement("g");
+  buildSvg({ bars, line }: ChartData): SVGSVGElement {
+    const svg = createSVGElement("svg") as SVGSVGElement;
+    const g = createSVGElement("g") as SVGGElement;
 
     svg.setAttribute("viewBox", "0 0 100 100");
     svg.setAttribute("version", "1.1");
@@ -35,22 +35,28 @@ export default class Chart extends HTMLElement {
     const maxBars = getMax(bars.values);
     const maxLine = getMax(line.values);
 
-    bars.values.forEach((item: any, index: number) => {
-      g.appendChild(this.buildBar(
-        100 / bars.values.length,
-        100 * item / maxBars,
-        index,
-      ))
-    });
-
+    // Build bars (rect SVG elements inside a group)
+    this.buildBars(bars.values, maxBars).forEach((rect) => g.appendChild(rect));
     svg.appendChild(g);
+
+    // Build line
     svg.appendChild(this.buildLine(line.values, maxLine));
 
     return svg;
   }
 
-  buildBar(width: number, height: number, index: number) {
-    const rect = createSVGElement("rect");
+  buildBars(values: ChartData["bars"]["values"], maxBars: number): SVGRectElement[] {
+    return values.map((item: any, index: number) => {
+      return this.buildBar(
+        100 / values.length,
+        100 * item / maxBars,
+        index,
+      );
+    });
+  }
+
+  buildBar(width: number, height: number, index: number): SVGRectElement {
+    const rect = createSVGElement("rect") as SVGRectElement;
 
     rect.setAttribute("width", `${(width - 3).toString()}%`);
     rect.setAttribute("height", `${height.toString()}%`);
@@ -60,10 +66,10 @@ export default class Chart extends HTMLElement {
     return rect;
   }
 
-  buildLine(data: any[], max: number) {
-    const polyline = createSVGElement("polyline");
-    const points = data.map((item: any, index: number) => {
-      const percentage = 100 / data.length;
+  buildLine(values: ChartData["line"]["values"], max: number): SVGPolylineElement {
+    const polyline = createSVGElement("polyline") as SVGPolylineElement;
+    const points = values.map((item: any, index: number) => {
+      const percentage = 100 / values.length;
       const x = (percentage * index) + (percentage / 2);
       const y = 100 - (50 * item / max);
 
