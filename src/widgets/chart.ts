@@ -44,11 +44,6 @@ const updateWidget = (data: ChartData): void => {
 // Events
 widget.shadowRoot.addEventListener("change",(event: Event) => {
   const target = event.target as HTMLSelectElement;
-  console.log("range change");
-  console.log(event);
-  console.log(target.name);
-  console.log(target.value);
-
 
   if (target.name === "range") {
     queryAndUpdate(target.value as "day_of_the_week" | "hourly");
@@ -60,14 +55,11 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 });
 
 // Query the data and send it to the widget
-const queryAndUpdate = (range: "day_of_the_week" | "hourly"): void => {
-  const result = endpoint.query(queries[range]);
+const queryAndUpdate = async (range: "day_of_the_week" | "hourly"): Promise<void> => {
+  const result = await endpoint.query(queries[range]) as ResponseType;
 
-  // Load the data into the widget
-  result.then((response: ResponseType) => {
-    rawData = response.data;
-    updateWidget(prepareData(rawData, "average_distance"));
-  });
+  rawData = result.data;
+  updateWidget(prepareData(rawData, "average_distance"));
 };
 
 // Initial load

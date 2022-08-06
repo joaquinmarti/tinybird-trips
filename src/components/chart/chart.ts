@@ -15,6 +15,7 @@ export default class Chart extends HTMLElement {
   }
 
   set data(data: ChartDataType) {
+    this.removeSvg();
     this.shadowRoot.appendChild(this.buildSvg(data))
   }
 
@@ -68,6 +69,14 @@ export default class Chart extends HTMLElement {
   }
 
   /* SVG rendering functions */
+  removeSvg(): void {
+    const svg = this.shadowRoot.querySelector("svg");
+
+    if (svg) {
+      svg.remove();
+    }
+  }
+
   buildSvg({ bars, line }: ChartDataType): SVGSVGElement {
     const svg = createSVGElement("svg") as SVGSVGElement;
     const g = createSVGElement("g") as SVGGElement;
