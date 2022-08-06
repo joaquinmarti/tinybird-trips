@@ -1,7 +1,8 @@
 import getMax from "./helpers/get-max";
 import createSVGElement from "./helpers/create-svg-element";
+import createSelect from "./helpers/create-select";
 import styles from "./styles.css";
-import type ChartData from "./types/chart-data";
+import type ChartDataType from "./types/chart-data";
 
 export default class Chart extends HTMLElement {
   constructor() {
@@ -10,12 +11,14 @@ export default class Chart extends HTMLElement {
     const shadow = this.attachShadow({ mode: 'open' });
 
     shadow.appendChild(this.buildStyle());
+    shadow.appendChild(this.buildFilters());
   }
 
-  set data(data: ChartData) {
+  set data(data: ChartDataType) {
     this.shadowRoot.appendChild(this.buildSvg(data))
   }
 
+  /* Styles */
   buildStyle(): HTMLStyleElement {
     const style = document.createElement("style");
 
@@ -24,7 +27,48 @@ export default class Chart extends HTMLElement {
     return style;
   }
 
-  buildSvg({ bars, line }: ChartData): SVGSVGElement {
+  /* Filters rendering functions */
+  buildFilters(): HTMLDivElement {
+    const div = document.createElement("div");
+
+    div.appendChild(this.buildRangeSelect());
+    div.appendChild(this.buildAggregatedSelect());
+
+    return div;
+  }
+
+  buildRangeSelect(): HTMLDivElement {
+    return createSelect("range", "Number of trips by time range", [
+      {
+        value: "dayOfTheWeek",
+        label: "Day of the week"
+      },
+      {
+        value: "hourly",
+        label: "Hourly"
+      }
+    ]);
+  }
+
+  buildAggregatedSelect(): HTMLDivElement {
+    return createSelect("line", "Select aggregated data", [
+      {
+        value: "fare",
+        label: "Total fare"
+      },
+      {
+        value: "average_fare",
+        label: "Average fare"
+      },
+      {
+        value: "average_distance",
+        label: "Average distance"
+      }
+    ]);
+  }
+
+  /* SVG rendering functions */
+  buildSvg({ bars, line }: ChartDataType): SVGSVGElement {
     const svg = createSVGElement("svg") as SVGSVGElement;
     const g = createSVGElement("g") as SVGGElement;
 
@@ -45,7 +89,7 @@ export default class Chart extends HTMLElement {
     return svg;
   }
 
-  buildBars(values: ChartData["bars"]["values"], maxBars: number): SVGRectElement[] {
+  buildBars(values: ChartDataType["bars"]["values"], maxBars: number): SVGRectElement[] {
     return values.map((item: number, index: number) => {
       return this.buildBar(
         100 / values.length,
@@ -66,7 +110,7 @@ export default class Chart extends HTMLElement {
     return rect;
   }
 
-  buildLine(values: ChartData["line"]["values"], max: number): SVGPolylineElement {
+  buildLine(values: ChartDataType["line"]["values"], max: number): SVGPolylineElement {
     const polyline = createSVGElement("polyline") as SVGPolylineElement;
     const points = values.map((item: number, index: number) => {
       const percentage = 100 / values.length;

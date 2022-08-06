@@ -1,4 +1,4 @@
-type ChartData = {
+type ChartDataType = {
   bars: {
     metric: string;
     values: number[];
@@ -9,4 +9,4 @@ type ChartData = {
   }
 };
 
-export default ChartData;
+export default ChartDataType;
