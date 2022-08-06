@@ -5,17 +5,25 @@
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
+  <style>
+    .widget-holder {
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
 </head>
 <body>
-  <!-- Start TB Widget -->
-  <script>
-    (function (w, d, s, ce) {
-      var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce);
-      w.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('chart') === 0)[0].attributes.src %>";
-      l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('init') === 0)[0].attributes.src %>";
-      l.async = true; f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f); f.parentNode.insertBefore(wdi, f);
-    })(window, document, "script", "tbw-chart");
-  </script>
-  <!-- End TB Widget -->
+  <div class="widget-holder">
+    <!-- Start TB Widget -->
+    <script>
+      (function (w, d, s, ce) {
+        var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce);
+        w.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('chart') === 0)[0].attributes.src %>";
+        l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('init') === 0)[0].attributes.src %>";
+        l.async = true; f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f); f.parentNode.insertBefore(wdi, f);
+      })(window, document, "script", "tbw-chart");
+    </script>
+    <!-- End TB Widget -->
+  </div>
 </body>
 </html>

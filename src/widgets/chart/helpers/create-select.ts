@@ -23,6 +23,8 @@ const createSelect = (name: string, text: string, options: OptionType[]): HTMLDi
   div.appendChild(label);
   div.appendChild(select);
 
+  div.setAttribute("class", "dropdown");
+
   return div;
 };
 
