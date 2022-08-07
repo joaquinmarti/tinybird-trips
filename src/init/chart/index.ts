@@ -39,7 +39,9 @@ const loadChart = async (): Promise<void> => {
   let data: ResponseType["data"];
 
   // If the data we need is alreay downloaded and cache we can use it
-  // directly. Otherwise, we can call the endpoint and cache it for later
+  // directly. Otherwise, we can call the endpoint and cache it for later.
+  // We are caching raw data, instead of the transformed one, because that
+  // could scale better if at some point we use the data for other purposes.
   if (cache.has(range)) {
     data = cache.get(range);
   } else {
