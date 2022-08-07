@@ -124,8 +124,8 @@ export default class Chart extends HTMLElement {
     //
     div.appendChild(svg);
     div.appendChild(this.buildHorizontalAxis(bars, literals[bars.metric] || bars.metric));
-    div.appendChild(this.buildBarslAxis(maxBars,  literals));
-    div.appendChild(this.buildLineslAxis(maxLine, literals[line.metric] || line.metric, literals["unit_" + line.metric]));
+    div.appendChild(this.buildVerticalAxis(maxBars, "bars-axis", literals.axis_trips));
+    div.appendChild(this.buildVerticalAxis(maxLine, "line-axis", literals[line.metric] || line.metric, literals["unit_" + line.metric]));
 
     return div;
   }
@@ -205,7 +205,6 @@ export default class Chart extends HTMLElement {
       lines75,
       lines100,
     ];
-    // <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
   }
 
   /* Chart axis */
@@ -230,48 +229,24 @@ export default class Chart extends HTMLElement {
     return div;
   }
 
-  /* @todo: Refactor these two methods as they're very similar */
-  buildBarslAxis(maxBars: number, literals: ChartDataType["literals"]): HTMLDivElement {
+  buildVerticalAxis(max: number, className: string, title: string, unit: string = ""): HTMLDivElement {
     const div = document.createElement("div");
     const span = document.createElement("span");
 
-    div.setAttribute("class", "bars-axis");
+    div.setAttribute("class", className);
     span.setAttribute("class", "label");
 
-    // Numbers from 0 to maxBars b 25% intervals
+    // Numbers from 0 to max b 25% intervals
     for (let i = 0; i < 5; i += 1) {
       const span = document.createElement("span");
-      span.innerHTML = `${(maxBars * i / 4).toLocaleString()}`;
+      span.innerHTML = `${(max * i / 4).toLocaleString()} ${unit}`;
       div.appendChild(span);
     }
 
-    //
-    span.innerHTML = literals.axis_trips;
+    span.innerHTML = title;
 
     div.appendChild(span);
 
     return div;
   }
-
-  buildLineslAxis(maxLine: number, metric: string, unit: string): HTMLDivElement {
-    const div = document.createElement("div");
-    const span = document.createElement("span");
-
-    div.setAttribute("class", "line-axis");
-    span.setAttribute("class", "label");
-
-    // Numbers from 0 to maxLine b 25% intervals
-    for (let i = 0; i < 5; i += 1) {
-      const span = document.createElement("span");
-      span.innerHTML = `${(maxLine * i / 4).toLocaleString()} ${unit}`;
-      div.appendChild(span);
-    }
-
-    //
-    span.innerHTML = metric;
-    div.appendChild(span);
-
-    return div;
-  }
-
 }
