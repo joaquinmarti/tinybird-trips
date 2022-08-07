@@ -16,11 +16,18 @@ export default class Chart extends HTMLElement {
   }
 
   set data(data: ChartDataType) {
-    /* @todo: filers don't need to be removed and created again, causes problms */
+    // Load the filters the first time the component receives the data property
+    // needed to build them, and update their values
+    const filters = this.shadowRoot.querySelector(".filters");
+
+    if (!filters) {
+      this.shadowRoot.appendChild(this.buildFilters(data.literals));
+      this.updateFilters(data.bars.metric, data.line.metric);
+    }
+
     /* @todo: keep track of the range loaded and only remove line */
     this.shadowRoot.querySelector(".chart")?.remove();
-    this.shadowRoot.querySelector(".filters")?.remove();
-    this.shadowRoot.appendChild(this.buildFilters(data.literals));
+
     this.shadowRoot.appendChild(this.buildChart(data));
   }
 
@@ -78,6 +85,15 @@ export default class Chart extends HTMLElement {
     ];
 
     return createSelect("aggregated", literals.select_aggregated, selectOptions);
+  }
+
+  updateFilters(barsMetric: string, lineMetric: string) {
+    const filters = this.shadowRoot.querySelector(".filters");
+    const rangeSelect = filters.querySelector("select[name=range]") as HTMLSelectElement;
+    const aggregatedSelect = filters.querySelector("select[name=aggregated]") as HTMLSelectElement;
+
+    rangeSelect.value = barsMetric;
+    aggregatedSelect.value = lineMetric;
   }
 
   /* SVG rendering functions */
