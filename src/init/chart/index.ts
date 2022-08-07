@@ -1,6 +1,6 @@
 import { UrlPersistence } from "../../lib";
 import type ChartData from "../../widgets/chart/types/chart-data";
-import { queries, defaultState, widgetTagName } from "./config";
+import { queries, defaultState, widgetTagName, roundScales, literals } from "./config";
 import prepareData from "./prepare-data";
 import endpoint from "./endpoint";
 import type { ResponseType } from "../../lib";
@@ -34,13 +34,13 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 const loadChart = async (): Promise<void> => {
   const { range, aggregated } = persistence.get();
   const result = await endpoint.query(queries[range || defaultState.range]) as ResponseType;
-  const data = prepareData(result.data, aggregated || defaultState.aggregated);
+  const data = prepareData(result.data, aggregated || defaultState.aggregated, roundScales, literals);
 
   updateWidget(data);
 };
 
-// History listener. When it changes it reloads the chart.
-// For this widget, the url behaves as a store (holds the single source of truth for data)
+// History listener. When it changes it triggers a chart reload.
+// For this widget, the url behaves as a store (holds the single source of truth for dropdowns state)
 // and the history API as an event bus, as it triggers the load when it changes.
 window.onpopstate = () => loadChart();
 

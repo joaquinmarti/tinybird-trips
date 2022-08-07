@@ -3,16 +3,24 @@ import type StateType from "../../widgets/chart/types/state";
 import type { ResponseType } from "../../lib";
 
 // Transforms the raw data into the format the chart widget expects
-const prepareData = (trips: ResponseType["data"], line: StateType["aggregated"]): ChartData => {
+const prepareData = (
+  trips: ResponseType["data"],
+  line: StateType["aggregated"],
+  scales: ChartData["scales"],
+  literals: ChartData["literals"]
+): ChartData => {
   return {
     bars: {
       metric: "trips",
-      values: trips.map(item => item["trips"])
+      values: trips.map(item => item["trips"]),
+      time: trips.map(item => item["time"])
     },
     line: {
       metric: line,
       values: trips.map(item => item[line])
     },
+    scales,
+    literals,
   }
 };
 

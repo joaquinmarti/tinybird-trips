@@ -1,6 +1,7 @@
 import getMax from "./helpers/get-max";
 import createSVGElement from "./helpers/create-svg-element";
 import createSelect from "./helpers/create-select";
+import round from "./helpers/round";
 import styles from "./styles.css";
 import type ChartDataType from "./types/chart-data";
 import type StateType from "./types/state";
@@ -12,12 +13,15 @@ export default class Chart extends HTMLElement {
     const shadow = this.attachShadow({ mode: "open" });
 
     shadow.appendChild(this.buildStyle());
-    shadow.appendChild(this.buildFilters());
   }
 
   set data(data: ChartDataType) {
-    this.shadowRoot.querySelector("svg")?.remove();
-    this.shadowRoot.appendChild(this.buildSvg(data))
+    /* @todo: filers don't need to be removed and created again, causes problms */
+    /* @todo: keep track of the range loaded and only remove line */
+    this.shadowRoot.querySelector(".chart")?.remove();
+    this.shadowRoot.querySelector(".filters")?.remove();
+    this.shadowRoot.appendChild(this.buildFilters(data.literals));
+    this.shadowRoot.appendChild(this.buildChart(data));
   }
 
   /* Styles */
@@ -31,45 +35,45 @@ export default class Chart extends HTMLElement {
 
   /* Filters rendering functions */
 
-  buildFilters(): HTMLDivElement {
+  buildFilters(literals: ChartDataType["literals"]): HTMLDivElement {
     const div = document.createElement("div");
 
-    div.appendChild(this.buildRangeSelect());
-    div.appendChild(this.buildAggregatedSelect());
+    div.appendChild(this.buildRangeSelect(literals));
+    div.appendChild(this.buildAggregatedSelect(literals));
 
     div.setAttribute("class", "filters");
 
     return div;
   }
 
-  buildRangeSelect(): HTMLDivElement {
+  buildRangeSelect(literals: ChartDataType["literals"]): HTMLDivElement {
     const selectOptions: { value: StateType["range"], label: string }[] = [
       {
         value: "day_of_the_week",
-        label: "Day of the week"
+        label: literals.day_of_the_week
       },
       {
         value: "hourly",
-        label: "Hourly"
+        label: literals.hourly
       }
     ];
 
     return createSelect("range", "Number of trips by time range", selectOptions);
   }
 
-  buildAggregatedSelect(): HTMLDivElement {
+  buildAggregatedSelect(literals: ChartDataType["literals"]): HTMLDivElement {
     const selectOptions: { value: StateType["aggregated"], label: string }[] = [
       {
         value: "fare",
-        label: "Total fare"
+        label: literals.fare
       },
       {
         value: "average_fare",
-        label: "Average fare"
+        label: literals.average_fare
       },
       {
         value: "average_distance",
-        label: "Average distance"
+        label: literals.average_distance
       }
     ];
 
@@ -78,16 +82,18 @@ export default class Chart extends HTMLElement {
 
   /* SVG rendering functions */
 
-  buildSvg({ bars, line }: ChartDataType): SVGSVGElement {
+  buildChart({ bars, line, scales, literals }: ChartDataType): HTMLDivElement {
+    const div = document.createElement("div");
     const svg = createSVGElement("svg") as SVGSVGElement;
     const g = createSVGElement("g") as SVGGElement;
 
+    div.setAttribute("class", "chart");
     svg.setAttribute("viewBox", "0 0 100 100");
     svg.setAttribute("version", "1.1");
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 
-    const maxBars = getMax(bars.values);
-    const maxLine = getMax(line.values);
+    const maxBars = round(getMax(bars.values), scales.trips);
+    const maxLine = round(getMax(line.values), scales[line.metric]);
 
     // Build guides
     this.buildGuides().forEach((line) => svg.appendChild(line));
@@ -99,7 +105,13 @@ export default class Chart extends HTMLElement {
     // Build line
     svg.appendChild(this.buildLine(line.values, maxLine));
 
-    return svg;
+    //
+    div.appendChild(svg);
+    div.appendChild(this.buildHorizontalAxis(bars, "day of the week or hourly"));
+    div.appendChild(this.buildBarslAxis(maxBars));
+    div.appendChild(this.buildLineslAxis(maxLine, literals[line.metric] || line.metric));
+
+    return div;
   }
 
   buildBars(values: ChartDataType["bars"]["values"], maxBars: number): SVGRectElement[] {
@@ -128,7 +140,7 @@ export default class Chart extends HTMLElement {
     const points = values.map((item: number, index: number) => {
       const percentage = 100 / values.length;
       const x = (percentage * index) + (percentage / 2);
-      const y = 100 - (50 * item / max);
+      const y = 100 - (100 * item / max);
 
       return `${x.toString()} ${y.toString()}`;
     }).join(" ");
@@ -179,4 +191,70 @@ export default class Chart extends HTMLElement {
     ];
     // <line x1="0" y1="80" x2="100" y2="20" stroke="black" />
   }
+
+  /* Chart axis */
+
+  buildHorizontalAxis(bars: ChartDataType["bars"], metric: string): HTMLDivElement {
+    const div = document.createElement("div");
+    const span = document.createElement("span");
+
+    div.setAttribute("class", "axis");
+    span.setAttribute("class", "label");
+
+    bars.time.forEach((item: number) => {
+      const span = document.createElement("span");
+      span.innerHTML = item.toString();
+      div.appendChild(span);
+    });
+
+    //
+    span.innerHTML = metric;
+    div.appendChild(span);
+
+    return div;
+  }
+
+  buildBarslAxis(maxBars: number): HTMLDivElement {
+    const div = document.createElement("div");
+    const span = document.createElement("span");
+
+    div.setAttribute("class", "bars-axis");
+    span.setAttribute("class", "label");
+
+    // Numbers from 0 to maxBars b 25% intervals
+    for (let i = 0; i < 5; i += 1) {
+      const span = document.createElement("span");
+      span.innerHTML = `${(maxBars * i / 4).toLocaleString()}`;
+      div.appendChild(span);
+    }
+
+    //
+    span.innerHTML = "Number of trips";
+
+    div.appendChild(span);
+
+    return div;
+  }
+
+  buildLineslAxis(maxLine: number, metric: string): HTMLDivElement {
+    const div = document.createElement("div");
+    const span = document.createElement("span");
+
+    div.setAttribute("class", "line-axis");
+    span.setAttribute("class", "label");
+
+    // Numbers from 0 to maxLine b 25% intervals
+    for (let i = 0; i < 5; i += 1) {
+      const span = document.createElement("span");
+      span.innerHTML = `${(maxLine * i / 4).toLocaleString()}`;
+      div.appendChild(span);
+    }
+
+    //
+    span.innerHTML = metric;
+    div.appendChild(span);
+
+    return div;
+  }
+
 }

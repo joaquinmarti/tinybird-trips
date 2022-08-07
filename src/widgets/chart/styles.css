@@ -1,3 +1,16 @@
+label,
+select,
+.chart {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1rem;
+  color: #2D3748;
+}
+
+.chart {
+  font-size: 0.8rem;
+  color: unset;
+}
+
 .filters {
   display: flex;
   flex-direction: column;
@@ -5,13 +18,6 @@
 
 .dropdown {
   margin: 0 2rem 1rem 0;
-  color: #2D3748;
-}
-
-label,
-select {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1rem;
 }
 
 label {
@@ -25,11 +31,17 @@ select {
   border-radius: 0.25rem;
 }
 
-svg {
+.chart {
   margin-top: 4rem;
-  width: 100%;
+  position: relative;
+}
+
+svg {
+  width: calc(100% - 12rem);
   height: 100%;
   overflow: visible;
+  margin-left: 6rem;
+  margin-right: 6rem;
 }
 
 rect {
@@ -47,6 +59,76 @@ line {
   stroke: #718096;
   stroke-width: 0.0125rem;
   stroke-dasharray: 0.0125rem;
+}
+
+.axis {
+  display: flex;
+  margin: 0.5rem 6rem 0 6rem;
+  position: relative;
+}
+
+.axis span {
+  flex: 1 0 auto;
+  text-align: center;
+}
+
+.axis .label {
+  position: absolute;
+  bottom: -1rem;
+  width: 100%;
+  text-align: center;
+}
+
+.bars-axis,
+.line-axis {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column-reverse;
+  height: calc(100% - 1rem);
+  position: absolute;
+  color: #48aae9;
+}
+
+.line-axis {
+  left: auto;
+  right: 1.5rem;
+  color: #718096;
+}
+
+.bars-axis .label,
+.line-axis .label {
+  position: absolute;
+  top: 50%;
+  left: -7rem;
+  transform: rotate(270deg);
+  transform-origin: center;
+  width: 15rem;
+  text-align: center;
+  padding: 0;
+}
+
+.line-axis .label {
+  left: -2.5rem;
+  transform: rotate(90deg);
+}
+
+.bars-axis span,
+.line-axis span {
+  flex: 1 0 auto;
+  padding-left: 2rem;
+  text-align: right;
+}
+
+.line-axis span {
+  text-align: left;
+  padding: 0;
+}
+
+.bars-axis span:first-child,
+.line-axis span:first-child {
+  flex: none;
 }
 
 @media screen and (min-width: 768px) {
