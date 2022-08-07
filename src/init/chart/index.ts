@@ -34,7 +34,13 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 const loadChart = async (): Promise<void> => {
   const { range, aggregated } = persistence.get();
   const result = await endpoint.query(queries[range || defaultState.range]) as ResponseType;
-  const data = prepareData(result.data, aggregated || defaultState.aggregated, roundScales, literals);
+  const data = prepareData(
+    result.data,
+    range || defaultState.range,
+    aggregated || defaultState.aggregated,
+    roundScales,
+    literals
+  );
 
   updateWidget(data);
 };

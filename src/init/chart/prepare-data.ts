@@ -5,13 +5,14 @@ import type { ResponseType } from "../../lib";
 // Transforms the raw data into the format the chart widget expects
 const prepareData = (
   trips: ResponseType["data"],
+  bars: StateType["range"],
   line: StateType["aggregated"],
   scales: ChartData["scales"],
   literals: ChartData["literals"]
 ): ChartData => {
   return {
     bars: {
-      metric: "trips",
+      metric: bars,
       values: trips.map(item => item["trips"]),
       time: trips.map(item => item["time"])
     },

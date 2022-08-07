@@ -58,7 +58,7 @@ export default class Chart extends HTMLElement {
       }
     ];
 
-    return createSelect("range", "Number of trips by time range", selectOptions);
+    return createSelect("range", literals.by_time_range, selectOptions);
   }
 
   buildAggregatedSelect(literals: ChartDataType["literals"]): HTMLDivElement {
@@ -77,7 +77,7 @@ export default class Chart extends HTMLElement {
       }
     ];
 
-    return createSelect("aggregated", "Select aggregated data", selectOptions);
+    return createSelect("aggregated", literals.select_aggregated, selectOptions);
   }
 
   /* SVG rendering functions */
@@ -107,7 +107,7 @@ export default class Chart extends HTMLElement {
 
     //
     div.appendChild(svg);
-    div.appendChild(this.buildHorizontalAxis(bars, "day of the week or hourly"));
+    div.appendChild(this.buildHorizontalAxis(bars, literals[bars.metric] || bars.metric));
     div.appendChild(this.buildBarslAxis(maxBars));
     div.appendChild(this.buildLineslAxis(maxLine, literals[line.metric] || line.metric));
 

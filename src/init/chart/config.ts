@@ -25,8 +25,10 @@ export const roundScales = {
 };
 
 export const literals = {
-  day_of_the_week: "Day of the week",
-  hourly: "Hourly",
+  by_time_range: "Number of trips by time range",
+  select_aggregated: "Select aggregated data",
+  day_of_the_week: "By day of the week",
+  hourly: "By hour",
   fare: "Total fare",
   average_fare: "Average fare",
   average_distance: "Average distance",
