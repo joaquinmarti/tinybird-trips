@@ -25,9 +25,7 @@ export default class Chart extends HTMLElement {
       this.updateFilters(data.bars.metric, data.line.metric);
     }
 
-    /* @todo: keep track of the range loaded and only remove line */
     this.shadowRoot.querySelector(".chart")?.remove();
-
     this.shadowRoot.appendChild(this.buildChart(data));
   }
 
