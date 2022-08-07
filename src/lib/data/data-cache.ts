@@ -1,4 +1,4 @@
-export default class DataCach<T> {
+export default class DataCach<T = any[]> {
   #cache: Map<string, T>;
 
   constructor() {

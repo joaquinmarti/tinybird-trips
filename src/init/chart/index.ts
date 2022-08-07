@@ -11,7 +11,7 @@ import type { ResponseType } from "../../lib";
 const persistence = new UrlPersistence();
 
 // Start DataCache layer
-const cache = new DataCache<ChartData>();
+const cache = new DataCache<ResponseType["data"]>();
 
 // Reference to the widget
 const widget = document.querySelector(widgetTagName) as HTMLElement & { data: ChartData };
@@ -36,24 +36,27 @@ widget.shadowRoot.addEventListener("change",(event: Event) => {
 // Load chart function, calls the endpoint and rerenders the widget
 const loadChart = async (): Promise<void> => {
   const { range, aggregated } = persistence.get();
+  let data: ResponseType["data"];
 
   // If the data we need is alreay downloaded and cache we can use it
   // directly. Otherwise, we can call the endpoint and cache it for later
   if (cache.has(range)) {
-    updateWidget(cache.get(range));
+    data = cache.get(range);
   } else {
     const result = await endpoint.query(queries[range || defaultState.range]) as ResponseType;
-    const data = prepareData(
-      result.data,
-      range || defaultState.range,
-      aggregated || defaultState.aggregated,
-      roundScales,
-      literals
-    );
-
-    updateWidget(data);
+    data = result.data;
     cache.set(range, data);
   }
+
+  const preparedData = prepareData(
+    data,
+    range || defaultState.range,
+    aggregated || defaultState.aggregated,
+    roundScales,
+    literals
+  );
+
+  updateWidget(preparedData);
 };
 
 // History listener. When it changes it triggers a chart reload.
