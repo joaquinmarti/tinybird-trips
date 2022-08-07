@@ -32,4 +32,8 @@ export const literals = {
   fare: "Total fare",
   average_fare: "Average fare",
   average_distance: "Average distance",
+  axis_trips: "Trips",
+  unit_fare: "$",
+  unit_average_fare: "$",
+  unit_average_distance: "miles",
 };

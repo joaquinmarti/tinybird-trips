@@ -108,8 +108,8 @@ export default class Chart extends HTMLElement {
     //
     div.appendChild(svg);
     div.appendChild(this.buildHorizontalAxis(bars, literals[bars.metric] || bars.metric));
-    div.appendChild(this.buildBarslAxis(maxBars));
-    div.appendChild(this.buildLineslAxis(maxLine, literals[line.metric] || line.metric));
+    div.appendChild(this.buildBarslAxis(maxBars,  literals));
+    div.appendChild(this.buildLineslAxis(maxLine, literals[line.metric] || line.metric, literals["unit_" + line.metric]));
 
     return div;
   }
@@ -214,7 +214,8 @@ export default class Chart extends HTMLElement {
     return div;
   }
 
-  buildBarslAxis(maxBars: number): HTMLDivElement {
+  /* @todo: Refactor these two methods as they're very similar */
+  buildBarslAxis(maxBars: number, literals: ChartDataType["literals"]): HTMLDivElement {
     const div = document.createElement("div");
     const span = document.createElement("span");
 
@@ -229,14 +230,14 @@ export default class Chart extends HTMLElement {
     }
 
     //
-    span.innerHTML = "Number of trips";
+    span.innerHTML = literals.axis_trips;
 
     div.appendChild(span);
 
     return div;
   }
 
-  buildLineslAxis(maxLine: number, metric: string): HTMLDivElement {
+  buildLineslAxis(maxLine: number, metric: string, unit: string): HTMLDivElement {
     const div = document.createElement("div");
     const span = document.createElement("span");
 
@@ -246,7 +247,7 @@ export default class Chart extends HTMLElement {
     // Numbers from 0 to maxLine b 25% intervals
     for (let i = 0; i < 5; i += 1) {
       const span = document.createElement("span");
-      span.innerHTML = `${(maxLine * i / 4).toLocaleString()}`;
+      span.innerHTML = `${(maxLine * i / 4).toLocaleString()} ${unit}`;
       div.appendChild(span);
     }
 
