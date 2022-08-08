@@ -18,13 +18,12 @@
   <div class="widget-holder">
     <!-- Start TB Widget -->
     <script>
-      (function (w, d, s, ce) {
-        var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce);
-        f.parentNode.insertBefore(wdi, f); l.defer = true;
+      (function (w, d, s, ce, ceid) {
+        var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce); wdi.setAttribute("id", ceid);
         w.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('chart') === 0)[0].attributes.src %>";
         l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('init') === 0)[0].attributes.src %>";
-        f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
-      })(window, document, "script", "tbw-chart");
+        l.defer = true; f.parentNode.insertBefore(wdi, f); f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
+      })(window, document, "script", "tbw-chart", "chart");
     </script>
     <!-- End TB Widget -->
   </div>

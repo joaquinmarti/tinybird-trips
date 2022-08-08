@@ -38,14 +38,10 @@ npm run test
 
 ## Description
 
-This repository contains a
+This repository contains a single page as a Dashboard with a widget consuming a Tinybird endpoint. The widget shows the endpoint data in an SVG chart and has deeplinked filters to show different metrics.
 
+The architecture is composed by these layers:
 
-contains a system to load external widgets into any site, and a single widget as example.
-
-It's composed by these layers:
-
-- A snippet to load widgets.
 - A presentational layer as a web component.
 - An initiator with specific code to start a single instance of a widget.
 - A mechanism to request API endpoints and cache their result.
@@ -106,3 +102,7 @@ Presentation layer
 ### Bundler
 
 ### Testing
+
+### Extra ball
+
+[https://rad-kringle-6bf302.netlify.app/snippet.html](https://rad-kringle-6bf302.netlify.app/snippet.html)

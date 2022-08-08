@@ -1,6 +1,6 @@
 import { UrlPersistence } from "../../lib";
 import type ChartData from "../../widgets/chart/types/chart-data";
-import { queries, defaultState, widgetTagName, roundScales, literals } from "./config";
+import { queries, defaultState, widgetId, roundScales, literals } from "./config";
 import prepareData from "./prepare-data";
 import endpoint from "./endpoint";
 import type { ResponseType } from "../../lib";
@@ -13,7 +13,7 @@ import type StateType from "../../widgets/chart/types/state";
 const persistence = new UrlPersistence<StateType>();
 
 // Reference to the widget
-const widget = document.querySelector(widgetTagName) as HTMLElement & { data: ChartData };
+const widget = document.querySelector(widgetId) as HTMLElement & { data: ChartData };
 
 // A function to update the widget by setting its data attribute
 // That will internally trigger a widget rerender

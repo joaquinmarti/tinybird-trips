@@ -15,7 +15,7 @@ export const defaultState: StateType = {
   aggregated: "fare",
 };
 
-export const widgetTagName = "tbw-chart";
+export const widgetId = "#chart";
 
 export const roundScales = {
   trips: 100000,
