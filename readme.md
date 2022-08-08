@@ -38,6 +38,16 @@ npm run test
 
 ## Description
 
+This repository contains a system to load external widgets into a site, a library with common tools, and a single widget with a presenational layer and an initiator.
+
+It's composed by these layers:
+
+- A snippet to load widgets.
+- A presentational layer as a web component.
+- An initiator with specific code to start a single instance of a widget.
+- A mechanism to request API endpoints and cache their result.
+- A persistence layer to handle the state in the URL.
+
 ## Production URL
 
 ## Technical approach
