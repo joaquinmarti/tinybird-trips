@@ -18,9 +18,10 @@
     <script>
       (function (w, d, s, ce) {
         var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce);
+        f.parentNode.insertBefore(wdi, f); l.defer = true;
         w.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('chart') === 0)[0].attributes.src %>";
         l.src = "/<%= htmlWebpackPlugin.tags.headTags.filter((tag) => tag.attributes.src.indexOf('init') === 0)[0].attributes.src %>";
-        l.defer = true; f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f); f.parentNode.insertBefore(wdi, f);
+        f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
       })(window, document, "script", "tbw-chart");
     </script>
     <!-- End TB Widget -->
