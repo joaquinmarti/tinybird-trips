@@ -165,44 +165,15 @@ export default class Chart extends HTMLElement {
   }
 
   buildGuides(): SVGLineElement[] {
-    const lines0 = createSVGElement("line") as SVGLineElement;
-    const lines25 = createSVGElement("line") as SVGLineElement;
-    const lines50 = createSVGElement("line") as SVGLineElement;
-    const lines75 = createSVGElement("line") as SVGLineElement;
-    const lines100 = createSVGElement("line") as SVGLineElement;
+    return [0, 25, 50, 75, 100].map((y) => {
+      const line = createSVGElement("line") as SVGLineElement;
+      line.setAttribute("x1", "0");
+      line.setAttribute("y1", y.toString());
+      line.setAttribute("x2", "100");
+      line.setAttribute("y2", y.toString());
 
-    lines0.setAttribute("x1", "0");
-    lines0.setAttribute("y1", "100");
-    lines0.setAttribute("x2", "100");
-    lines0.setAttribute("y2", "100");
-
-    lines25.setAttribute("x1", "0");
-    lines25.setAttribute("y1", "75");
-    lines25.setAttribute("x2", "100");
-    lines25.setAttribute("y2", "75");
-
-    lines50.setAttribute("x1", "0");
-    lines50.setAttribute("y1", "50");
-    lines50.setAttribute("x2", "100");
-    lines50.setAttribute("y2", "50");
-
-    lines75.setAttribute("x1", "0");
-    lines75.setAttribute("y1", "25");
-    lines75.setAttribute("x2", "100");
-    lines75.setAttribute("y2", "25");
-
-    lines100.setAttribute("x1", "0");
-    lines100.setAttribute("y1", "0");
-    lines100.setAttribute("x2", "100");
-    lines100.setAttribute("y2", "0");
-
-    return [
-      lines0,
-      lines25,
-      lines50,
-      lines75,
-      lines100,
-    ];
+      return line;
+    });
   }
 
   /* Chart axis */
@@ -242,7 +213,6 @@ export default class Chart extends HTMLElement {
     }
 
     span.innerHTML = title;
-
     div.appendChild(span);
 
     return div;
