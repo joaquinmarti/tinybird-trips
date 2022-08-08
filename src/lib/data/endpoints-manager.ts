@@ -1,5 +1,5 @@
 import Endpoint from "./endpoint";
-import type EndpointFormat from "./query-format";
+import type EndpointFormat from "../types/query-format";
 
 export default class EndpointsManager {
   protected endpoints: Map<string, Endpoint>;
