@@ -19,9 +19,26 @@ const createSelect = (name: string, text: string, options: OptionType[]): HTMLDi
   // Prepare label with a text node
   label.innerText = text;
 
-  //
+  // Append the label and the select to the parent div
   div.appendChild(label);
   div.appendChild(select);
+
+  // We need to dispatch a custom event because the native
+  // change event has the composed property set to false and it
+  // doesn't bubble up to the main DOM. With the custom event we can set
+  // compose to true and listen the event from the main DOM
+  select.addEventListener("change", (event) => {
+    const changeEvent = new CustomEvent("chart-dropdown-change", {
+      detail: {
+        sourceEvent: event
+      },
+      composed: true,
+      bubbles: event.bubbles,
+      cancelable: event.cancelable
+    });
+
+    select.dispatchEvent(changeEvent);
+  });
 
   div.setAttribute("class", "dropdown");
 

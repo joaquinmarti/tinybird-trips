@@ -19,26 +19,6 @@ const widget = document.querySelector(widgetTagName) as HTMLElement & { data: Ch
 // That will internally trigger a widget rerender
 const updateWidget = (data: ChartData) => widget.data = data;
 
-// Capture the change event from the widget dropdowns.
-// In this event handler we use the persistence layer to save the dropdown values
-// The persistence layer is a URL query param manager that trigger a history change.
-// Later on, the history listener will be triggered and that will upload the chart.
-console.log(widget);
-console.log(widget.shadowRoot);
-
-
-widget.shadowRoot.addEventListener("change",(event: Event) => {
-  const target = event.target as HTMLSelectElement;
-
-  if (target.name === "range") {
-    persistence.set("range", target.value);
-  }
-
-  if (target.name === "aggregated") {
-    persistence.set("aggregated", target.value);
-  }
-});
-
 // Load chart function, calls the endpoint and rerenders the widget
 // Internally, the endpoint query has a cache system so it does not call the API if it already has the results
 const loadChart = async (): Promise<void> => {
@@ -59,6 +39,25 @@ const loadChart = async (): Promise<void> => {
 // For this widget, the url behaves as a store (holds the single source of truth for dropdowns state)
 // and the history API as an event bus, as it triggers the load when it changes.
 window.onpopstate = () => loadChart();
+
+// Capture the change event from the widget dropdowns.
+// In this event handler we use the persistence layer to save the dropdown values
+// The persistence layer is a URL query param manager that trigger a history change.
+// Later on, the history listener will be triggered and that will upload the chart.
+widget.addEventListener("chart-dropdown-change", (event: Event & { detail: any }) => {
+  event.stopImmediatePropagation();
+
+  const target = event.detail.sourceEvent.target as HTMLSelectElement;
+
+  if (target.name === "range") {
+    persistence.set("range", target.value);
+  }
+
+  if (target.name === "aggregated") {
+    persistence.set("aggregated", target.value);
+  }
+});
+
 
 // Initial load
 loadChart();
