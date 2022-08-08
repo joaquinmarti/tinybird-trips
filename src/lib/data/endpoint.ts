@@ -13,7 +13,7 @@ export default class Endpoint {
     protected enableCache: boolean,
   ) {
     if (enableCache) {
-      this.cache = new DataCache<ResponseType["data"]>();
+      this.cache = new DataCache<ResponseType>();
     }
   }
 
@@ -42,14 +42,14 @@ export default class Endpoint {
     .catch(error => console.log(error));
   }
 
-  query(q: string): unknown | Promise<unknown> {
+  async query(q: string): Promise<ResponseType> {
     // If the data we need is alreay downloaded and cache we can use it
     // directly. Otherwise, we can call the endpoint and cache it for later.
     if (this.cache && this.cache.has(q)) {
       return this.cache.get(q);
     } else {
       const queryURL = this.buildQueryURL(q);
-      const result = this.fetch(queryURL);
+      const result = await this.fetch(queryURL);
 
       // Save result in cache if it's enabled
       if (this.cache) {

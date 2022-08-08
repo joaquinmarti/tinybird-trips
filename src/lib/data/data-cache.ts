@@ -1,11 +1,11 @@
-export default class DataCache<T = any[]> {
+export default class DataCache<T = unknown[]> {
   #cache: Map<string, T>;
 
   constructor() {
     this.#cache = new Map();
   }
 
-  set(key: string, value: any): void {
+  set(key: string, value: T): void {
     this.#cache.set(key, value);
   }
 

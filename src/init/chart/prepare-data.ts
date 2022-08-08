@@ -1,10 +1,10 @@
 import type ChartData from "../../widgets/chart/types/chart-data";
-import type StateType from "../../widgets/chart/types/state";
-import type { ResponseType } from "../../lib";
+import type StateType from "../../widgets/chart/types/state";;
+import type { QueryResponseType } from "./config";
 
 // Transforms the raw data into the format the chart widget expects
 const prepareData = (
-  trips: ResponseType["data"],
+  data: QueryResponseType[],
   bars: StateType["range"],
   line: StateType["aggregated"],
   scales: ChartData["scales"],
@@ -13,12 +13,12 @@ const prepareData = (
   return {
     bars: {
       metric: bars,
-      values: trips.map(item => item["trips"]),
-      time: trips.map(item => item["time"])
+      values: data.map(item => item["trips"]),
+      time: data.map(item => item["time"])
     },
     line: {
       metric: line,
-      values: trips.map(item => item[line])
+      values: data.map(item => item[line])
     },
     scales,
     literals,

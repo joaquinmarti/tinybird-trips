@@ -37,3 +37,11 @@ export const literals = {
   unit_average_fare: "$",
   unit_average_distance: "miles",
 };
+
+export type QueryResponseType = {
+  average_distance: number;
+  average_fare: number;
+  fare: number;
+  time: number;
+  trips: number;
+};

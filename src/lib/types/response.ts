@@ -1,6 +1,6 @@
 type ResponseType = {
-  data: any[];
-  meta: any[];
+  data: unknown[];
+  meta: unknown[];
   rows: number;
   statistics: {
     [key: string]: number;

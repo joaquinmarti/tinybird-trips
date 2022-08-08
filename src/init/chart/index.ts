@@ -4,6 +4,7 @@ import { queries, defaultState, widgetTagName, roundScales, literals } from "./c
 import prepareData from "./prepare-data";
 import endpoint from "./endpoint";
 import type { ResponseType } from "../../lib";
+import type { QueryResponseType } from "./config";
 
 // Start the persistence layer, for this case is the URL.
 // If we had more widgets in the same page we'd need to add a prefix to the props
@@ -35,7 +36,7 @@ const loadChart = async (): Promise<void> => {
   const { range, aggregated } = persistence.get();
   const result = await endpoint.query(queries[range || defaultState.range]) as ResponseType;
   const preparedData = prepareData(
-    result.data,
+    result.data as QueryResponseType[],
     range || defaultState.range,
     aggregated || defaultState.aggregated,
     roundScales,
