@@ -2,11 +2,11 @@
 
 ## Requirements
 
-* [Node](https://nodejs.org/)
+[Node](https://nodejs.org/)
 
-Having installed [NVM](https://github.com/creationix/nvm) is recommended to execute different NPM versions in the development machine. This projects asumes the Node version is `v14.17.6`.
+This projects asumes the Node version is `v14.17.6` but any modern version will work.
 
-If you have NPM execute this command in the repository folder for every new terminal session:
+If you have [NVM](https://github.com/creationix/nvm) execute this command in the repository folder for every new terminal session to make sure the Node version matches with the environment.
 
 ```
 nvm use
@@ -50,7 +50,7 @@ The project is deployed in this URL:
 
 ## Technical solution
 
-A widget is by default a standalone element that can be added to any website. A site could contain several widgets, including more than one instance of the same one. Even though the purposes of every widget might be very different, they  likely would share similar needs: access to data, caching, persistence.
+A widget is by default a standalone element that can be added to any website. A site could contain several widgets, including more than one instance of the same one. Even though the purposes of every widget might be very different, they  likely would share similar needs: access to data, caching, persistence, and eventually other features.
 
 Considering the previous assumptions, the technical solution is divided in three main elements:
 
@@ -70,52 +70,18 @@ The stack is based on web standards, no external dependencies needed. The involv
 
 ## Architecture
 
+The following diagram illustrates the general architecture of the picture.
+
 ![Architecture diagram](./support/diagram.svg)
 
-
-
-### Presentational layer
-
-#### Assumptions
-
-- A widget is a component that can be added to a website as a standalone feature.
-- It should not be part of the critical rendering path.
-- It should not contain external dependencies to avoid impacting on the site performance.
-- It should not need a Javascript framework to load.
-
-#### Technical solution
-
-Web components will be used to develop the widgets for these reasons:
-
-- Web components are web standards, hence, they don't need any external dependency.
-- Work on every modern browser without polyfills.
-- Some APIs might be polyfilled if old browsers need to be targeted.
-- They are compatible with all major Javascript frameworks.
-- They provide encapsulation and abstraction.
-
-### Code snippet
-
-#### Assumptions
-
-- A widget can be rendered at any place of the site wherever a code snippet is added.
-- A site might have multiple instances of a widget.
-- A site could have multiple types of widgets
-
-
-
-### Bootstrap a widget
-
-### Data access
-
-### Persistence
-
-
-
-Presentation layer
-
-### Bundler
+- The site contains a widget.
+- The widget is composed by the initiator/controller and the presentational layer.
+- The initiator requests the data to the Tinybird endpoint and caches it. Later requests will not hit the endpoint.
+- The persistence layer saves the filters states after every user action. In this widget, the persistence layer saves the state in the query params URL but other mechanisms could be easily done implementing the same interface: cookie, local storage, memory, remote database...
 
 ### Testing
+
+A thin layer of unit testing has been implemented. The current coverage includes the whole library and the web component helpers. More tests could be added to cover the web component rendering, and another set of e2e tests could cover the whole widget behavior.
 
 ### Extra ball
 
