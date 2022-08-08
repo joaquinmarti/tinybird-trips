@@ -234,7 +234,7 @@ export default class Chart extends HTMLElement {
     div.setAttribute("class", className);
     span.setAttribute("class", "label");
 
-    // Numbers from 0 to max b 25% intervals
+    // Numbers from 0 to max by 25% intervals
     for (let i = 0; i < 5; i += 1) {
       const span = document.createElement("span");
       span.innerHTML = `${(max * i / 4).toLocaleString()} ${unit}`;

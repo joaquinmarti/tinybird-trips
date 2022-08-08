@@ -20,7 +20,7 @@ export const widgetTagName = "tbw-chart";
 export const roundScales = {
   trips: 100000,
   fare: 10000000,
-  average_distance: 0.5,
+  average_distance: 1,
   average_fare: 5,
 };
 
