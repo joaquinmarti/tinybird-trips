@@ -1,16 +1,18 @@
 import PersistenceServive from "./common/persistence-service-interface";
-import type StateType from "../../widgets/chart/types/state";
 
-export default class UrlPersistence implements PersistenceServive {
+export default class UrlPersistence<T = {}> implements PersistenceServive {
   constructor() {}
 
-  get(): StateType {
+  get(): T {
     const params = new URLSearchParams(window.location.search);
 
-    return {
-      range: params.get("range") as StateType["range"],
-      aggregated: params.get("aggregated") as StateType["aggregated"],
-    };
+    const state: { [k: string]: string } = {};
+    for (const item of params.entries()) {
+      const [key, value]: [string, string] = item;
+      state[key] = value;
+    }
+
+    return state as unknown as T;
   }
 
   set(name: string, value: string) {

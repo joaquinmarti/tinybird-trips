@@ -5,11 +5,13 @@ import prepareData from "./prepare-data";
 import endpoint from "./endpoint";
 import type { ResponseType } from "../../lib";
 import type { QueryResponseType } from "./config";
+import type StateType from "../../widgets/chart/types/state";
+
 
 // Start the persistence layer, for this case is the URL.
 // If we had more widgets in the same page we'd need to add a prefix to the props
 // related to each widget
-const persistence = new UrlPersistence();
+const persistence = new UrlPersistence<StateType>();
 
 // Reference to the widget
 const widget = document.querySelector(widgetTagName) as HTMLElement & { data: ChartData };
