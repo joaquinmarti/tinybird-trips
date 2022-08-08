@@ -29,9 +29,15 @@ export default class Endpoint {
         "Content-Type": "application/json",
       }
     })
-    .then((r) => {
+    .then(async (r) => {
       if (this.type === "json") {
-        return r.json();
+        const json = await r.json();
+
+        if (json.error) {
+          throw new Error(json.error);
+        }
+
+        return json;
       } else if (this.type === "csv" || this.type === "ndjson" || this.type === "parquet") {
         return r.text();
       } else {
