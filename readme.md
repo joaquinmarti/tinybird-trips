@@ -2,7 +2,39 @@
 
 ## Requirements
 
-## Available commands
+* [Node](https://nodejs.org/)
+
+Having installed [NVM](https://github.com/creationix/nvm) is recommended to execute different NPM versions in the development machine. This projects asumes the Node version is `v14.17.6`.
+
+If you have NPM execute this command in the repository folder for every new terminal session:
+
+```
+nvm use
+```
+
+## Install dependencies
+
+```
+npm install
+```
+
+## Start dev environment
+
+```
+npm run dev
+```
+
+## Build production bundle
+
+```
+npm run build
+```
+
+## Execute tests
+
+```
+npm run test
+```
 
 ## Description
 
