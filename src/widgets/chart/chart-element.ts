@@ -1,4 +1,3 @@
-import getMax from "./helpers/get-max";
 import createSVGElement from "./helpers/create-svg-element";
 import createSelect from "./helpers/create-select";
 import round from "./helpers/round";
@@ -106,8 +105,8 @@ export default class ChartElement extends HTMLElement {
     svg.setAttribute("version", "1.1");
     svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
 
-    const maxBars = round(getMax(bars.values), scales.trips);
-    const maxLine = round(getMax(line.values), scales[line.metric]);
+    const maxBars = round(Math.max(...bars.values), scales.trips);
+    const maxLine = round(Math.max(...line.values), scales[line.metric]);
 
     // Build guides
     this.buildGuides().forEach((line) => svg.appendChild(line));

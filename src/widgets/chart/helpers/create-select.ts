@@ -17,7 +17,7 @@ const createSelect = (name: string, text: string, options: OptionType[]): HTMLDi
   });
 
   // Prepare label with a text node
-  label.appendChild(document.createTextNode(text));
+  label.innerText = text;
 
   //
   div.appendChild(label);
