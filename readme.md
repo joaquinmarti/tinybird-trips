@@ -50,6 +50,10 @@ It's composed by these layers:
 
 ## Production URL
 
+The project is available in this URL:
+
+[https://rad-kringle-6bf302.netlify.app/](https://rad-kringle-6bf302.netlify.app/)
+
 ## Technical approach
 
 ### Widgets
