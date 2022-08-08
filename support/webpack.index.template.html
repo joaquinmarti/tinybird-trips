@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
+  <style>
+    .widget-holder {
+      width: 100%;
+      max-width: 600px;
+    }
+  </style>
+  <%= htmlWebpackPlugin.tags.headTags %>
+</head>
+
+<body>
+  <div class="widget-holder">
+    <tbw-chart></tbw-chart>
+  </div>
+</body>
+
+</html>

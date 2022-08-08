@@ -38,7 +38,10 @@ npm run test
 
 ## Description
 
-This repository contains a system to load external widgets into a site, a library with common tools, and a single widget with a presenational layer and an initiator.
+This repository contains a
+
+
+contains a system to load external widgets into any site, and a single widget as example.
 
 It's composed by these layers:
 
@@ -55,6 +58,8 @@ The project is available in this URL:
 [https://rad-kringle-6bf302.netlify.app/](https://rad-kringle-6bf302.netlify.app/)
 
 ## Technical approach
+
+
 
 ### Widgets
 

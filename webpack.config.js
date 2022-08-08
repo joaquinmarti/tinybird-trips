@@ -27,12 +27,22 @@ module.exports = {
   resolve: {
     extensions: [".js", ".ts"],
   },
-  plugins: [new HtmlWebpackPlugin({
-    chunks: ["init", "chart"],
-    template: "./support/webpack.template.html",
-    title: "Tinybird Widgets Test",
-    inject: false
-  })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      chunks: ["init", "chart"],
+      template: "./support/webpack.index.template.html",
+      title: "Tinybird Dashboard",
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      filename: "snippet.html",
+      chunks: ["init", "chart"],
+      template: "./support/webpack.snippet.template.html",
+      title: "Tinybird Dashboard with snippet",
+      inject: false
+    })
+],
   devServer: {
     static: path.join(__dirname, "dist"),
     compress: true,
