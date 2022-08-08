@@ -1,12 +1,21 @@
 import { API_URL } from "./config";
+import DataCache from "./data-cache";
+import ResponseType from "../types/response";
 
 export default class Endpoint {
+  protected cache;
+
   constructor(
     protected name: string,
     protected version: string,
     protected type: string,
-    protected token: string
-  ) {}
+    protected token: string,
+    protected enableCache: boolean,
+  ) {
+    if (enableCache) {
+      this.cache = new DataCache<ResponseType["data"]>();
+    }
+  }
 
   protected buildQueryURL(q: string) {
     return `${API_URL}/${this.version}/pipes/${this.name}.${this.type}?q=${q}`;
@@ -33,8 +42,20 @@ export default class Endpoint {
     .catch(error => console.log(error));
   }
 
-  query(q: string): Promise<unknown> {
-    const queryURL = this.buildQueryURL(q);
-    return this.fetch(queryURL);
+  query(q: string): unknown | Promise<unknown> {
+    // If the data we need is alreay downloaded and cache we can use it
+    // directly. Otherwise, we can call the endpoint and cache it for later.
+    if (this.cache && this.cache.has(q)) {
+      return this.cache.get(q);
+    } else {
+      const queryURL = this.buildQueryURL(q);
+      const result = this.fetch(queryURL);
+
+      // Save result in cache if it's enabled
+      if (this.cache) {
+        this.cache.set(q, result);
+      }
+      return result;
+    }
   }
 }
