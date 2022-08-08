@@ -49,13 +49,13 @@ The architecture is composed by these layers:
 
 ## Production URL
 
-The project is available in this URL:
+The project is deployed in this URL:
 
 [https://rad-kringle-6bf302.netlify.app/](https://rad-kringle-6bf302.netlify.app/)
 
 ## Technical approach
 
-
+A widget is by default a standalone element that can be added to any website. A site could contain several widgets, including more than one instance of the same one.
 
 ### Widgets
 
@@ -104,5 +104,22 @@ Presentation layer
 ### Testing
 
 ### Extra ball
+
+This repository also contains a mechanism to load widgets out of a small snippet of code. The snippet loads the Javascript files, the web component and the initiator, to bootstrap an instance of a widget.
+
+````
+<script>
+  (function (w, d, s, ce, ceid) {
+    var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce); wdi.setAttribute("id", ceid);
+    w.src = "/chart-8f3aed33e0510dc4122f.js";
+    l.src = "/init-a76254050987ffbb8447.js";
+    l.defer = true; f.parentNode.insertBefore(wdi, f); f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
+  })(window, document, "script", "tbw-chart", "chart");
+</script>
+```
+
+The snippet allows external sites to load widgets, despite the framework used in the site, as the widgets are based on web standards (javascript, web components, svg) and they don't need any external dependency. The script tag loading the widget does not get loaded in the critical path to avoid afecting the site core web vitals metric.
+
+En example can be found here:
 
 [https://rad-kringle-6bf302.netlify.app/snippet.html](https://rad-kringle-6bf302.netlify.app/snippet.html)
