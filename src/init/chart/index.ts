@@ -23,6 +23,10 @@ const updateWidget = (data: ChartData) => widget.data = data;
 // In this event handler we use the persistence layer to save the dropdown values
 // The persistence layer is a URL query param manager that trigger a history change.
 // Later on, the history listener will be triggered and that will upload the chart.
+console.log(widget);
+console.log(widget.shadowRoot);
+
+
 widget.shadowRoot.addEventListener("change",(event: Event) => {
   const target = event.target as HTMLSelectElement;
 
