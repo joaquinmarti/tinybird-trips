@@ -107,7 +107,7 @@ Presentation layer
 
 This repository also contains a mechanism to load widgets out of a small snippet of code. The snippet loads the Javascript files, the web component and the initiator, to bootstrap an instance of a widget.
 
-````
+```
 <script>
   (function (w, d, s, ce, ceid) {
     var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce); wdi.setAttribute("id", ceid);
