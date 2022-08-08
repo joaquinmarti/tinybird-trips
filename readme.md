@@ -12,25 +12,27 @@ If you have NPM execute this command in the repository folder for every new term
 nvm use
 ```
 
-## Install dependencies
+## Commands
+
+### Install dependencies
 
 ```
 npm install
 ```
 
-## Start dev environment
+### Start dev environment
 
 ```
 npm run dev
 ```
 
-## Build production version
+### Build production version
 
 ```
 npm run build
 ```
 
-## Execute tests
+### Execute tests
 
 ```
 npm run test
@@ -38,14 +40,7 @@ npm run test
 
 ## Description
 
-This repository contains a single page as a Dashboard with a widget consuming a Tinybird endpoint. The widget shows the endpoint data in an SVG chart and has deeplinked filters to show different metrics.
-
-The architecture is composed by these layers:
-
-- A presentational layer as a web component.
-- An initiator with specific code to start a single instance of a widget.
-- A mechanism to request API endpoints and cache their result.
-- A persistence layer to handle the state in the URL.
+This repository contains a single page as a Dashboard with a widget consuming a Tinybird endpoint. The widget shows the endpoint data in an SVG chart and has deeplinked filters to render different metrics.
 
 ## Production URL
 
@@ -53,13 +48,35 @@ The project is deployed in this URL:
 
 [https://rad-kringle-6bf302.netlify.app/](https://rad-kringle-6bf302.netlify.app/)
 
-## Technical approach
+## Technical solution
 
-A widget is by default a standalone element that can be added to any website. A site could contain several widgets, including more than one instance of the same one.
+A widget is by default a standalone element that can be added to any website. A site could contain several widgets, including more than one instance of the same one. Even though the purposes of every widget might be very different, they  likely would share similar needs: access to data, caching, persistence.
 
-### Widgets
+Considering the previous assumptions, the technical solution is divided in three main elements:
 
-#### Assumtions
+- A presentational layer as a web component. It is data agnostic, so it could render different metrics, scales and filters.
+- An initiator with specific code to start a single instance of a widget. It behaves as the widget instance controller. It access the data and sends it to the presentational layer.
+- A library solving common needs: a mechanism to request API endpoints, cache the data and a persistence layer to handle the state in the URL.
+
+## Stack
+
+The stack is based on web standards, no external dependencies needed. The involved standards are:
+
+- Web component APIs: Custom elements and Shadow dom.
+- SVG
+- HTML
+- CSS
+- Javascript (Typescript)
+
+## Architecture
+
+![Architecture diagram](./support/diagram.svg)
+
+
+
+### Presentational layer
+
+#### Assumptions
 
 - A widget is a component that can be added to a website as a standalone feature.
 - It should not be part of the critical rendering path.
@@ -84,17 +101,14 @@ Web components will be used to develop the widgets for these reasons:
 - A site might have multiple instances of a widget.
 - A site could have multiple types of widgets
 
-#### Technical solution
 
 
 ### Bootstrap a widget
 
-### Endpoints access
+### Data access
 
 ### Persistence
 
-
-### Architecture
 
 
 Presentation layer
