@@ -6,7 +6,7 @@ import styles from "./styles.css";
 import type ChartDataType from "./types/chart-data";
 import type StateType from "./types/state";
 
-export default class Chart extends HTMLElement {
+export default class ChartElement extends HTMLElement {
   constructor() {
     super();
 
@@ -16,10 +16,10 @@ export default class Chart extends HTMLElement {
   }
 
   set data(data: ChartDataType) {
-    // Load the filters the first time the component receives the data property
-    // needed to build them, and update their values
     const filters = this.shadowRoot.querySelector(".filters");
 
+    // Load the filters the first time the component receives the data property
+    // needed to build them, and update their values
     if (!filters) {
       this.shadowRoot.appendChild(this.buildFilters(data.literals));
       this.updateFilters(data.bars.metric, data.line.metric);
