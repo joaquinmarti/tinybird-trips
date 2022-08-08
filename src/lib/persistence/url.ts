@@ -1,5 +1,8 @@
 import PersistenceServive from "./common/persistence-service-interface";
 
+// This class abstracts the URL query param management. It can set a new parameter or
+// get the current ones. The query params in this case are used to persist a certain state
+
 export default class UrlPersistence<T = {}> implements PersistenceServive {
   constructor() {}
 

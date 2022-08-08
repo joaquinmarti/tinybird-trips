@@ -1,3 +1,7 @@
+// Evert instance of DataCache class will hold in memory the data of the endpoints
+// that have been called previously. With that, we can avoid making extra API calls
+// trading that off for a larger memory usage.
+
 export default class DataCache<T = unknown[]> {
   #cache: Map<string, T>;
 

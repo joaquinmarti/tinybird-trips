@@ -1,6 +1,9 @@
 import Endpoint from "./endpoint";
 import type EndpointFormat from "../types/query-format";
 
+// An instance of this class can handle several endpoints. It is useful from the architecture
+// point of view because the same token could provide access to more than one endpoint.
+
 export default class EndpointsManager {
   protected endpoints: Map<string, Endpoint>;
 
@@ -8,6 +11,7 @@ export default class EndpointsManager {
     this.endpoints = new Map();
   }
 
+  // Returns the instance of an endpoint as a combination of pipe, type and version
   createEndpoint(name: string, enableCache: boolean = true, type: EndpointFormat = "json", version: string = "v0"): Endpoint {
     const key = `${name}.${type}@${version}`;
 

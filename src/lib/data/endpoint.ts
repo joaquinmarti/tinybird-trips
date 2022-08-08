@@ -2,6 +2,9 @@ import { API_URL } from "./config";
 import DataCache from "./data-cache";
 import ResponseType from "../types/response";
 
+// This class can query a pipe using native fetch function. It includes optionally the
+// cache mechanism, so the results can be saved in memory to avoid calling the API more than once.
+
 export default class Endpoint {
   protected cache;
 
