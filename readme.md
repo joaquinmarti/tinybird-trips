@@ -1,4 +1,4 @@
-# Joaquin Marti's assignment for Tinybird interview
+# Joaquin Marti's TB widget test
 
 ## Requirements
 
@@ -24,7 +24,7 @@ npm install
 npm run dev
 ```
 
-## Build production bundle
+## Build production version
 
 ```
 npm run build
