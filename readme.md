@@ -70,7 +70,7 @@ The stack is based on web standards, no external dependencies needed. The involv
 
 ## Architecture
 
-The following diagram illustrates the general architecture of the picture.
+The following diagram illustrates the architecture.
 
 ![Architecture diagram](./support/diagram.svg)
 
