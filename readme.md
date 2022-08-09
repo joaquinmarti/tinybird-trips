@@ -93,7 +93,7 @@ This repository also contains a mechanism to load widgets out of a small snippet
     var f = d.currentScript, l = d.createElement(s), w = d.createElement(s), wdi = d.createElement(ce); wdi.setAttribute("id", ceid);
     w.src = "/chart-8f3aed33e0510dc4122f.js";
     l.src = "/init-a76254050987ffbb8447.js";
-    l.defer = true; f.parentNode.insertBefore(wdi, f); f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
+    f.parentNode.insertBefore(wdi, f); f.parentNode.insertBefore(w, f); f.parentNode.insertBefore(l, f);
   })(window, document, "script", "tbw-chart", "chart");
 </script>
 ```
