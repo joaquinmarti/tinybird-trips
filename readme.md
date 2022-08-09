@@ -98,7 +98,7 @@ This repository also contains a mechanism to load widgets out of a small snippet
 </script>
 ```
 
-The snippet would allow external sites to load widgets, despite the framework used in the site, as the widgets are based on web standards (javascript, web components, svg) and they don't need any external dependency. The snippet loads the widget JS files after the critical path to avoid afecting the site core web vitals metric.
+The snippet would allow external sites to load widgets, despite the framework used in the site, as the widgets are based on web standards (javascript, web components, svg) and they don't need any external dependency. The snippet loads the widget JS files after the critical path to avoid afecting the site's core web vitals.
 
 En example can be found here:
 
