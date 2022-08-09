@@ -98,8 +98,16 @@ This repository also contains a mechanism to load widgets out of a small snippet
 </script>
 ```
 
-The snippet allows external sites to load widgets, despite the framework used in the site, as the widgets are based on web standards (javascript, web components, svg) and they don't need any external dependency. The script tag loading the widget does not get loaded in the critical path to avoid afecting the site core web vitals metric.
+The snippet would allow external sites to load widgets, despite the framework used in the site, as the widgets are based on web standards (javascript, web components, svg) and they don't need any external dependency. The snippet loads the widget JS files after the critical path to avoid afecting the site core web vitals metric.
 
 En example can be found here:
 
 [https://rad-kringle-6bf302.netlify.app/snippet.html](https://rad-kringle-6bf302.netlify.app/snippet.html)
+
+### Next steps
+
+- Increase testing coverage: more unit testing and e2e.
+- Chart accessibility: make sure the info is available for all users.
+- Performance: the chart rerenders the bars when the aggregated data is changed and it doesn't need to.
+- Styling: systematize the design by using some reusable abstractions such as custom properties or class extends/mixins.
+- Solve widget and library versioning.
