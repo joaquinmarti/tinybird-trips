@@ -76,7 +76,7 @@ The following diagram illustrates the architecture.
 
 - The site contains a widget.
 - The widget is composed by the initiator/controller and the presentational layer.
-- The initiator requests the data to the Tinybird endpoint and caches it. Later requests will not hit the endpoint.
+- The initiator requests the data to the Tinybird endpoint and caches it. Later requests with the same SQL statement will not hit the endpoint.
 - The persistence layer saves the filters states after every user action. In this widget, the persistence layer saves the state in the query params URL but other mechanisms could be easily done implementing the same interface: cookie, local storage, memory, remote database...
 
 ### Testing
